@@ -99,6 +99,12 @@ func main() {
 				os.Exit(1)
 			}
 			os.Exit(0)
+		case "serve":
+			if err := runServe(os.Args[2:]); err != nil {
+				fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+				os.Exit(1)
+			}
+			return
 		case "--dump-sections":
 			if err := dumpSections(); err != nil {
 				fmt.Fprintf(os.Stderr, "Error: %v\n", err)
@@ -177,6 +183,8 @@ Usage:
   slk --add-workspace     Add a Slack workspace (interactive)
   slk --remove-workspace  Remove a configured workspace (interactive)
   slk --list-workspaces   List configured workspaces (TeamID, Slug, Name)
+  slk serve [--port 4097] [--cors <origin>]
+                          Serve workspaces over HTTP on 127.0.0.1 (see docs/serve.md)
   slk --dump-sections     Dump raw users.channelSections.list JSON (diagnostic)
   slk --version          Print version and exit
   slk --help             Show this help
